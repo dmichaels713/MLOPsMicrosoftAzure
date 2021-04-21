@@ -1,0 +1,28 @@
+name: Infrastructure Deploy
+
+on:
+  push:
+    paths:
+    - '**.bicep' # Should only run when an infra template changes
+
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Az CLI Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Az CLI Resource Group Deployment
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.22.1
+        inlineScript: |
+          az deployment group create --resource-group ${{ secrets.RG_NAME }} --template-file $GITHUB_WORKSPACE/infrastructure/main.bicep
