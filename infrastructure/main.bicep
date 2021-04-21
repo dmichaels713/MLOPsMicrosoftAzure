@@ -1,17 +1,14 @@
 param keyVaultAccessPolicyTargetObjectId string
+param mlWorkspaceName string
+param keyVaultName string
+param storageAccountName string
+param computeInstanceName string
+param mlClusterName string
+param appInsightsName string
+param containerRegistryName string
 
 var location = resourceGroup().location
 var tenantId = subscription().tenantId
-
-var resourceUniqueSuffix = uniqueString(resourceGroup().id)
-
-var keyVaultName = 'keyvault${resourceUniqueSuffix}'
-var storageAccountName = 'storage${resourceUniqueSuffix}'
-var mlWorkspaceName = 'mlworkspace${resourceUniqueSuffix}'
-var computeInstanceName = 'mlci${resourceUniqueSuffix}'
-var mlClusterName = 'cl${resourceUniqueSuffix}'
-var appInsightsName = 'appinisghts${resourceUniqueSuffix}'
-var containerRegistryName = 'containerregistry${resourceUniqueSuffix}'
 
 resource vault 'Microsoft.KeyVault/vaults@2020-04-01-preview' = {
   name: keyVaultName
